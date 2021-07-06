@@ -16,10 +16,13 @@ RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
 ENV PATH="/root/mmtk-v8-workspace/depot_tools:${PATH}"
 RUN gclient
 RUN fetch v8
-RUN gclient sync
 # Clone MMTk
 RUN git clone https://github.com/mmtk/mmtk-v8.git
 
+# Checkout a working V8 revision.
+# TODO: Use latest v8.
+RUN git -C v8 checkout 191b637f28c0e2c6ca5f2d6ac89377039a754337
+RUN gclient sync
 
 WORKDIR /root/mmtk-v8-workspace
 COPY ./args-debug.gn ./v8/out/x64.debug-mmtk/args.gn
